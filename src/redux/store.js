@@ -13,6 +13,7 @@ import { takeLatest, put } from 'redux-saga/effects';
 
 function* rootSaga() {
   yield takeLatest('SAGA/GET_PLANTS', getPlants)
+  yield takeLatest('SAGA/POST_PLANT', postPlants)
 }
 
 const plantList = (state = [], action) => {
@@ -37,6 +38,24 @@ function* getPlants() {
     
   } catch(error) {
     console.log('Getting plants from server faild:', error);
+  }
+}
+
+
+function* postPlants(action) {
+  try {
+    const response = yield axios({
+      method: 'POST',
+      url: '/api/plants',
+      data: {
+        newPlant: action.payload
+      }
+    })
+    yield put({
+      type: 'SAGA/GET_PLANTS'
+    })
+  } catch (error) {
+    console.log('Error saving plant to the server:', error)
   }
 }
 

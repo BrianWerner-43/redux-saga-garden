@@ -20,3 +20,7 @@
 pre {
     white-space: pre-wrap;
 }
+
+.form-inputs {
+  display: flexbox;
+}
